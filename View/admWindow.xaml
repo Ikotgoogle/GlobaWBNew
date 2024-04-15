@@ -100,7 +100,35 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Пункты выдачи">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ListView x:Name="admPointsList" Margin="10" ItemsSource="{Binding Points}" SelectedItem="{Binding SelectedPoint}">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Адрес" DisplayMemberBinding="{Binding Address, UpdateSourceTrigger=PropertyChanged}"/>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
+                    <ListView Grid.Column="1" Margin="10" ItemsSource="{Binding SelectedPoint.Staff}">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding Post, UpdateSourceTrigger=PropertyChanged}"/> 
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

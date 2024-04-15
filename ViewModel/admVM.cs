@@ -66,6 +66,12 @@ namespace GlobaWBNew.ViewModel {
             set { selectedSeller = value; OnPropertyChanged(nameof(SelectedSeller)); OnPropertyChanged(nameof(FoundItems)); }
         }
 
+        private Model.Point selectedPoint;
+        public Model.Point SelectedPoint {
+            get { return selectedPoint; }
+            set { selectedPoint = value; OnPropertyChanged(nameof(SelectedPoint)); }
+        }
+
         void AddNewGood(object obj) {
             var good = new Book();
             if(new AddNewGoodWindow(good, Sellers).ShowDialog() == false) return;
