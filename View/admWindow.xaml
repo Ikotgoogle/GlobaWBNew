@@ -106,7 +106,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="admPointsList" Margin="10" ItemsSource="{Binding Points}" SelectedItem="{Binding SelectedPoint}">
+                    <ListView x:Name="admPointsList" Margin="5" ItemsSource="{Binding Points}" SelectedItem="{Binding SelectedPoint}">
                         <ListView.View>
                             <GridView>
                                 <GridView.Columns>
@@ -117,17 +117,37 @@
                         </ListView.View>
                     </ListView>
 
-                    <ListView Grid.Column="1" Margin="10" ItemsSource="{Binding SelectedPoint.Staff}">
-                        <ListView.View>
-                            <GridView>
-                                <GridView.Columns>
-                                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding Post, UpdateSourceTrigger=PropertyChanged}"/> 
-                                </GridView.Columns>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.1*"/>
+                        </Grid.RowDefinitions>                        
+
+                        <ListView x:Name="staffLV" Margin="5" ItemsSource="{Binding SelectedPoint.Staff}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridView.Columns>
+                                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding Post, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <GridViewColumn>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel>
+                                                        <Button Content="Удалить" Command="{Binding ElementName=staffLV, Path=DataContext.DeleteStaffCmd}"/>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView.Columns>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <StackPanel Grid.Row="1" Width="auto" VerticalAlignment="Center">
+                            <Button Content="Добавить" Command="{Binding ElementName=staffLV, Path=DataContext.AddNewStaffCmd}"></Button>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

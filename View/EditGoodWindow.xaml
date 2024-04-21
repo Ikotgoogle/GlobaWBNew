@@ -48,7 +48,7 @@ SelectedItem="{Binding SelectedSeller}">
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button Width="60" Height="25" Content="Save" IsDefault="True" Click="Button_Click" Command="{Binding ClickOKcmd}"/>
+            <Button Width="70" Height="25" Content="Сохранить" IsDefault="True" Click="Button_Click" Command="{Binding ClickOKcmd}"/>
         </StackPanel>
     </Grid>
 </Window>

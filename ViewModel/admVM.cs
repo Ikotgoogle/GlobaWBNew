@@ -16,6 +16,8 @@ namespace GlobaWBNew.ViewModel {
         public RelayCommand EditGoodCmd { get; set; }
         public RelayCommand DeleteGoodCmd { get; set; }
         public RelayCommand ClearSelectedSellerCmd { get; set; }
+        public RelayCommand DeleteStaffCmd { get; set; }
+        public RelayCommand AddNewStaffCmd { get; set; }
 
         public admVM() {
             db.Database.EnsureCreated();
@@ -32,6 +34,8 @@ namespace GlobaWBNew.ViewModel {
             EditGoodCmd = new(EditGood);
             DeleteGoodCmd = new(DeleteGood);
             ClearSelectedSellerCmd = new(ClearSelectedSeller);
+            DeleteStaffCmd = new(DeleteStaff);
+            AddNewStaffCmd = new(AddNewStaff);
         }
 
         private string search;
@@ -91,6 +95,16 @@ namespace GlobaWBNew.ViewModel {
             }
         }
 
+        void AddNewStaff(object obj) {
+            var staff = new Staff();
+            if(new AddNewStaffWindow(staff, SelectedPoint).ShowDialog() == false) return;
+            else if(staff.FullName == "") return;
+            else {
+                db.Staff.Add(staff);
+                db.SaveChanges();
+            }
+        }
+
         void ClearSelectedSeller(object obj) {
             SelectedSeller = null;
             OnPropertyChanged(nameof(SelectedSeller));
@@ -100,7 +114,13 @@ namespace GlobaWBNew.ViewModel {
             if(MessageBox.Show("Вы уверены, что хотите удалить " + ((Book)obj).Title + "?", "Удаление товара", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 db.Books.Remove(obj as Book);
             }
-        }        
+        }
+
+        void DeleteStaff(object obj) {
+            if(MessageBox.Show("Вы уверены, что хотите удалить " + ((Staff)obj).FullName + "?", "Удаление товара", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                db.Staff.Remove(obj as Staff);
+            }
+        }
 
         private RelayCommand close;
         public EventHandler CloseHandler;

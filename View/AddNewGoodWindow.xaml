@@ -7,7 +7,10 @@
         xmlns:viewmodel="clr-namespace:GlobaWBNew.ViewModel" 
         d:DataContext="{d:DesignInstance Type=viewmodel:AddGoodVM}"
         mc:Ignorable="d"
-        Title="AddNewGoodWindow" Height="350" Width="420" ResizeMode="NoResize">
+        Title="Добавить товар" 
+        Height="350" 
+        Width="420" 
+        ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.15*"/>
@@ -49,7 +52,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button Width="60" Height="25" Content="Add" IsDefault="True" Click="Button_Click" Command="{Binding ClickOKcmd}"/>
+            <Button Width="60" Height="25" Content="Добавить" IsDefault="True" Click="Button_Click" Command="{Binding ClickOKcmd}"/>
         </StackPanel>
     </Grid>
 </Window>
