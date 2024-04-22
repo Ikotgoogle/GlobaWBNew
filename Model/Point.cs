@@ -2,33 +2,34 @@
 
 namespace GlobaWBNew.Model {
     public class Point : PropChange {
-        private int _id;
+        private int id;
         public int Id {
-            get { return _id; }
-            set { _id = value; OnPropertyChanged(nameof(Id)); }
+            get { return id; }
+            set { id = value; OnPropertyChanged(nameof(Id)); }
         }
 
-        private string _address;
+        private string address;
         public string Address {
-            get { return _address; }
-            set { _address = value; OnPropertyChanged(nameof(Address)); }
+            get { return address; }
+            set { address = value; OnPropertyChanged(nameof(Address)); }
         }
 
-        private double _rate {
-            get { return _rate; }
-            set { _rate = value; OnPropertyChanged(nameof(_rate)); }
+        private double rate;
+        public double Rate {
+            get { return rate; }
+            set { rate = value; OnPropertyChanged(nameof(Rate)); }
         }
 
-        private ObservableCollection<Staff> _staff;
+        private ObservableCollection<Staff> staff;
         public ObservableCollection<Staff> Staff {
-            get { return _staff; }
-            set { _staff = value; OnPropertyChanged(nameof(Staff)); }
+            get { return staff; }
+            set { staff = value; OnPropertyChanged(nameof(Staff)); }
         }
 
-        private ObservableCollection<Order> _orders;
+        private ObservableCollection<Order> orders;
         public ObservableCollection<Order>? Orders {
-            get { return _orders; }
-            set { _orders = value; OnPropertyChanged(nameof(Orders)); }
+            get { return orders; }
+            set { orders = value; OnPropertyChanged(nameof(Orders)); }
         }
     }
 }

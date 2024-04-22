@@ -11,6 +11,7 @@ namespace GlobaWBNew.ViewModel {
         public ObservableCollection<Model.Point> Points { get; set; }
         public ObservableCollection<Seller> Sellers { get; set; }
         public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<Staff> Staff { get; set; }
 
         public RelayCommand AddNewGoodCmd { get; set; }
         public RelayCommand EditGoodCmd { get; set; }
@@ -25,10 +26,12 @@ namespace GlobaWBNew.ViewModel {
             db.Sellers.Load();
             db.Books.Load();
             db.Points.Load();
+            db.Staff.Load(); 
 
             Sellers = db.Sellers.Local.ToObservableCollection();
             Books = db.Books.Local.ToObservableCollection();
             Points = db.Points.Local.ToObservableCollection();
+            Staff = db.Staff.Local.ToObservableCollection();
 
             AddNewGoodCmd = new(AddNewGood);
             EditGoodCmd = new(EditGood);
@@ -96,6 +99,10 @@ namespace GlobaWBNew.ViewModel {
         }
 
         void AddNewStaff(object obj) {
+            if(SelectedPoint == null) {
+                MessageBox.Show("Выберите пункт выдачи!", "Предупреждение!");
+                return;
+            }
             var staff = new Staff();
             if(new AddNewStaffWindow(staff, SelectedPoint).ShowDialog() == false) return;
             else if(staff.FullName == "") return;

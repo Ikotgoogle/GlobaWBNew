@@ -9,7 +9,7 @@ namespace GlobaWBNew.ViewModel {
         public AddNewStaffVM(Staff staff, Point point) {
             Staff = staff;
             Point = point;
-            Roles = new List<string>() { "ADM", "EMP" };
+            Roles = new List<string>() { "ADM", "STF" };
             ClickOKCmd = new(ClickOK);
         }
 
@@ -53,7 +53,7 @@ namespace GlobaWBNew.ViewModel {
             Staff.FullName = NewFullName;
             Staff.Post = NewPost;
             Staff.Salary = NewSalary;
-            //Staff.Point = Point;
+            Staff.Point = Point;
             Staff.Login = NewLogin;
             Staff.Password = NewPassword;
             Staff.Role = SelectedRole;

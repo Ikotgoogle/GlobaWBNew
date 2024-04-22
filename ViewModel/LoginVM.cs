@@ -2,28 +2,32 @@
 using GlobaWBNew.View;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace GlobaWBNew.ViewModel {
     public class LoginVM : PropChange {
         private ApplicationContext db = new ApplicationContext();
 
         public ObservableCollection<Staff> Staff { get; set; }
+        private Window LoginWnd { get; set; }
 
-        public LoginVM() {
+        public LoginVM(Window loginWnd) {
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            Point point1 = new Point { Address = "Ленина, 90"};
-            Point point2 = new Point { Address = "Сталелитейная, 44/2"};
-            Point point3 = new Point { Address = "Станиславского, 7"};
-            Point point4 = new Point { Address = "Новогодняя, 142" };
-            Point point5 = new Point { Address = "Планировочная, 16" };
-            Point point6 = new Point { Address = "Станционная, 58" };
-            Point point7 = new Point { Address = "Шекспира, 7" };
-            Point point8 = new Point { Address = "Каменская, 82" };
+            LoginWnd = loginWnd;
 
             Staff staff1 = new Staff { FullName = "Лыско Иван Евгеньевич", Login = "IvanLE", Password = "12345", Role = "ADM", Post = "Admin", Salary = 90000 };
             Staff staff2 = new Staff { FullName = "Вахрушева Анна Сергеевна", Login = "AnnaVS", Password = "54321", Role = "STF", Post = "Worker", Salary = 45000 };
+
+            Model.Point point1 = new Model.Point { Address = "Ленина, 90", Staff = new ObservableCollection<Staff> { staff1 } };
+            Model.Point point2 = new Model.Point { Address = "Сталелитейная, 44/2", Staff = new ObservableCollection<Staff> { staff2 } };
+            Model.Point point3 = new Model.Point { Address = "Станиславского, 7", Staff = new ObservableCollection<Staff>() };
+            Model.Point point4 = new Model.Point { Address = "Новогодняя, 142", Staff = new ObservableCollection<Staff>() };
+            Model.Point point5 = new Model.Point { Address = "Планировочная, 16", Staff = new ObservableCollection<Staff>() };
+            Model.Point point6 = new Model.Point { Address = "Станционная, 58", Staff = new ObservableCollection<Staff>() };
+            Model.Point point7 = new Model.Point { Address = "Шекспира, 7", Staff = new ObservableCollection<Staff>() };
+            Model.Point point8 = new Model.Point { Address = "Каменская, 82", Staff = new ObservableCollection<Staff>() };
 
             Seller sel1 = new Seller() { Name = "JOYCITY", ContactInformation = "JoyCiti@gmail.com", Books = new ObservableCollection<Book>() };
             Seller sel2 = new Seller() { Name = "Samy", ContactInformation = "Samy@gmail.com", Books = new ObservableCollection<Book>() };
@@ -35,10 +39,9 @@ namespace GlobaWBNew.ViewModel {
             db.Points.AddRange(point1, point2, point3, point4, point5, point6, point7, point8);
             db.Sellers.AddRange(sel1, sel2, sel3, sel4, sel5, sel6);
 
-            db.SaveChanges();
-
             db.Staff.Add(staff1);
             db.Staff.Add(staff2);
+            db.SaveChanges();
             db.Staff.Load();
             Staff = db.Staff.Local.ToObservableCollection();
         }
@@ -70,23 +73,21 @@ namespace GlobaWBNew.ViewModel {
                 return getAuth ?? (getAuth = new RelayCommand(obj => {
                     Staff? foundedStaff = CorrectInformation(this.Login, this.Password);
                     if(foundedStaff == null) {
-                        System.Windows.MessageBox.Show("Неверный логин или пароль!", "Внимание!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                        MessageBox.Show("Неверный логин или пароль!", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     string role = foundedStaff.Role;
                     switch(role) {
                         case "ADM":
                             admWindow admWindow = new admWindow();
-                            admWindow.Owner = System.Windows.Application.Current.MainWindow;
-                            admWindow.ShowDialog();
+                            admWindow.Show();
                             break;
                         case "STF":
                             empWindow empWindow = new empWindow();
-                            empWindow.Owner = System.Windows.Application.Current.MainWindow;
-                            empWindow.ShowDialog();
+                            empWindow.Show();
                             break;
                     }
-
+                    LoginWnd.Close();
                 }));
             }
         }
